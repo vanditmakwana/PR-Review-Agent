@@ -19,7 +19,7 @@ def call_openrouter(prompt):
     }
 
     data = {
-        "model": "openchat/openchat-3.5",
+        "model": "meta-llama/llama-3-8b-instruct:free",
         "messages": [
             {
                 "role": "user",
