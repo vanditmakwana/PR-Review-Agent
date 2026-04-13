@@ -2,6 +2,7 @@ import os
 import requests
 from .github_utils import get_pr_diff, post_comment
 from .prompt import build_prompt
+from email_utils import send_email
 
 OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
@@ -51,7 +52,25 @@ def main():
     post_comment(REPO, PR_NUMBER, review, GITHUB_TOKEN)
 
     print("✅ Done")
+    email_body = f"""
+    🚀 PR Review Report
 
+    Repository: {REPO}
+    PR Number: {PR_NUMBER}
+
+    ----------------------------------------
+
+    {review}
+
+    ----------------------------------------
+
+    View PR: https://github.com/{REPO}/pull/{PR_NUMBER}
+    """
+
+    send_email(
+        subject=f"PR Review #{PR_NUMBER}",
+        body=email_body
+    )
 
 if __name__ == "__main__":
     main()
