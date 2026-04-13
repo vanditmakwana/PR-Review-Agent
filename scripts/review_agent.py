@@ -22,8 +22,21 @@ def call_openrouter(prompt):
             ]
         }
     )
-
-    return response.json()["choices"][0]["message"]["content"]
+    
+    # Check if request was successful
+    response.raise_for_status()
+    
+    data = response.json()
+    
+    # Check for API errors
+    if 'error' in data:
+        raise Exception(f"OpenRouter API Error: {data['error']}")
+    
+    # Check if choices exists and is not empty
+    if 'choices' not in data or not data['choices']:
+        raise KeyError(f"Invalid API response: missing or empty 'choices'. Response: {data}")
+    
+    return data["choices"][0]["message"]["content"]
 
 
 def main():
