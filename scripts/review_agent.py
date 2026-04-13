@@ -13,10 +13,12 @@ def call_openrouter(prompt):
         "https://openrouter.ai/api/v1/chat/completions",
         headers={
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com",  # REQUIRED
+            "X-Title": "PR Review Agent"
         },
         json={
-            "model": "mistralai/mistral-7b-instruct",
+            "model": "openchat/openchat-3.5",
             "messages": [
                 {"role": "user", "content": prompt}
             ]
