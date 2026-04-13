@@ -7,8 +7,7 @@ def send_email(subject, body):
     password = os.environ["EMAIL_PASS"]
 
     receivers = [
-        "teammember1@gmail.com",
-        "teammember2@gmail.com"
+        "dhruvrathod0730@gmail.com"
     ]
 
     msg = MIMEText(body)
