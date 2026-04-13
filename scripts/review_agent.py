@@ -9,36 +9,34 @@ REPO = os.environ["GITHUB_REPOSITORY"]
 PR_NUMBER = os.environ["PR_NUMBER"]
 
 def call_openrouter(prompt):
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com",  # REQUIRED
-            "X-Title": "PR Review Agent"
-        },
-        json={
-            "model": "openchat/openchat-3.5",
-            "messages": [
-                {"role": "user", "content": prompt}
-            ]
-        }
-    )
-    
-    # Check if request was successful
+    url = "https://openrouter.ai/api/v1/chat/completions"
+
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://github.com",
+        "X-Title": "PR Review Agent"
+    }
+
+    data = {
+        "model": "mistralai/mistral-7b-instruct",
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
+    # 🔥 DEBUG (IMPORTANT)
+    print("STATUS:", response.status_code)
+    print("RESPONSE:", response.text)
+
     response.raise_for_status()
-    
-    data = response.json()
-    
-    # Check for API errors
-    if 'error' in data:
-        raise Exception(f"OpenRouter API Error: {data['error']}")
-    
-    # Check if choices exists and is not empty
-    if 'choices' not in data or not data['choices']:
-        raise KeyError(f"Invalid API response: missing or empty 'choices'. Response: {data}")
-    
-    return data["choices"][0]["message"]["content"]
+
+    return response.json()["choices"][0]["message"]["content"]
 
 
 def main():
