@@ -19,7 +19,7 @@ def call_openrouter(prompt):
     }
 
     data = {
-        "model": "meta-llama/llama-3-8b-instruct:free",
+        "model": "openrouter/auto",
         "messages": [
             {
                 "role": "user",
