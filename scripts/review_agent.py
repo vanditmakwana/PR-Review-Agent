@@ -19,7 +19,7 @@ def call_openrouter(prompt):
     }
 
     data = {
-        "model": "mistralai/mistral-7b-instruct",
+        "model": "openchat/openchat-3.5",
         "messages": [
             {
                 "role": "user",
