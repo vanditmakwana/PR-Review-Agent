@@ -2,7 +2,7 @@ import os
 import requests
 from .github_utils import get_pr_diff, post_comment
 from .prompt import build_prompt
-from email_utils import send_email
+from .email_utils import send_email
 
 OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
