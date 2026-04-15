@@ -68,8 +68,10 @@ def main():
     """
 
     send_email(
-        subject=f"PR Review #{PR_NUMBER}",
-        body=email_body
+    subject=f"PR Review #{PR_NUMBER}",
+    review=review,
+    repo=REPO,
+    pr_number=PR_NUMBER
     )
 
 if __name__ == "__main__":
